@@ -31,3 +31,5 @@
 - Uniforme discrète
 - Hypergéométrique
 - Binomiale négative
+
+Lien application shiny : https://julienparfaitbds.shinyapps.io/Lois-de-probabilites-discretes/
