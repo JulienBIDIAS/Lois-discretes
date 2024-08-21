@@ -22,14 +22,12 @@
   Toujours est-il que l'utilisation des packages permet d'aller vite mais la programmation
   permet encore de mieux les maîtriser et comprendre comment ils sont monter.
 
-  Nous présentons les lois suivantes :
+  Nous présentons la loi :
 
-- Exponentielle
-- Uniforme continue
-- Loi normale 
-- Loi log-normale
-- Loi de khi-deux
-- Loi de Student
-- Loi de Weibull 
-- Loi de Gumbel
-- Loi Gamma
+- De Bernouilli
+- Binomiale
+- De Poisson
+- Géométrique
+- Uniforme discrète
+- Hypergéométrique
+- Binomiale négative
