@@ -1,0 +1,762 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+  ignorenonframetext,
+]{beamer}
+\usepackage{pgfpages}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+% Prevent slide breaks in the middle of a paragraph
+\widowpenalties 1 10000
+\raggedbottom
+\setbeamertemplate{part page}{
+  \centering
+  \begin{beamercolorbox}[sep=16pt,center]{part title}
+    \usebeamerfont{part title}\insertpart\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{section page}{
+  \centering
+  \begin{beamercolorbox}[sep=12pt,center]{part title}
+    \usebeamerfont{section title}\insertsection\par
+  \end{beamercolorbox}
+}
+\setbeamertemplate{subsection page}{
+  \centering
+  \begin{beamercolorbox}[sep=8pt,center]{part title}
+    \usebeamerfont{subsection title}\insertsubsection\par
+  \end{beamercolorbox}
+}
+\AtBeginPart{
+  \frame{\partpage}
+}
+\AtBeginSection{
+  \ifbibliography
+  \else
+    \frame{\sectionpage}
+  \fi
+}
+\AtBeginSubsection{
+  \frame{\subsectionpage}
+}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\usetheme[]{CambridgeUS}
+\usecolortheme{dolphin}
+\usefonttheme{structurebold}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\newif\ifbibliography
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Lois de probabilités discrètes sur R},
+  pdfauthor={Julien Parfait Bidias Assala},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Lois de probabilités discrètes sur R}
+\author{Julien Parfait Bidias Assala}
+\date{2024-08-21}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Background}
+\protect\hypertarget{background}{}
+\begin{itemize}
+\item
+  Les lois de probabilités discrètes en statistiques permettent de
+  modéliser des situations où les variables aléatoires prennent un
+  nombre fini ou dénombrable de valeurs distinctes. Ces lois sont
+  couramment utilisées pour décrire des phénomènes où les résultats
+  possibles sont limités à des catégories distinctes ou des événements
+  discrets.
+\item
+  Par exemple, la loi binomiale permet de modéliser le nombre de succès
+  dans une série d'essais indépendants, tandis que la loi de Poisson est
+  utilisée pour décrire le nombre d'événements survenant dans un
+  intervalle de temps ou d'espace fixe. D'autres exemples incluent la
+  loi géométrique, qui mesure le nombre d'essais avant le premier
+  succès, et la loi hypergéométrique, utilisée pour des échantillons
+  sans remise.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Lois de probabilités discrètes}
+\protect\hypertarget{lois-de-probabilituxe9s-discruxe8tes}{}
+Comment modéliser simplement, sans packages et de façon tout à fait
+compréhensible toutes ces différentes lois ? Tel est l'objet de la
+présentation.
+
+Nous présentons la loi :
+
+\begin{itemize}
+\tightlist
+\item
+  De Bernoulli
+\item
+  Binomiale
+\item
+  De Poisson
+\item
+  Géométrique
+\item
+  Uniforme discrète
+\item
+  Hypergéométrique
+\item
+  Binomiale négative
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Loi de Bernoulli}
+\protect\hypertarget{loi-de-bernouilli}{}
+
+X suit une loi de Bernoulli lorsque :
+
+\[P(X=k) = p^k (1-p)^{1-k} \quad avec \quad  k=0,1 \quad et \quad p \in ]0,1[\]
+
+D'où le programme ci-dessous.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bernoulli }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(p,k)\{}
+  \ControlFlowTok{if}\NormalTok{ ( (k}\SpecialCharTok{==}\DecValTok{0} \SpecialCharTok{|}\NormalTok{ k}\SpecialCharTok{==}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) )\{}
+\NormalTok{        probabilite }\OtherTok{=}\NormalTok{ p}\SpecialCharTok{**}\NormalTok{k }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{k)}
+        \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \} }\ControlFlowTok{else}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de k ou de p"}\NormalTok{)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Loi de Bernoulli}
+\protect\hypertarget{loi-de-bernouilli-1}{}
+Supposons que X suit une loi de Bernoulli
+avec \(p=0.4\). On veut calculer \(P(X=0)\) et \(P(X=1)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bernoulli}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\DecValTok{0}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bernoulli}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.4
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{bernoulli}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Entrer des valeurs correctes de k ou de p"
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Espérance, variance et Fonction de répartition}
+\protect\hypertarget{espuxe9rance-variance-et-fonction-de-ruxe9partition}{}
+Pour la moyenne et la variance il suffit de prendre :
+
+\[E(X) = p\] \[Var(X) = pq\] La construction de la fonction de
+répartition passe par la relation :
+
+\[F_X (k) = P(X\le k)\] On peut passer aussi par la relation :
+
+\[F_X (k) = P(X\le k) = \sum_{i=0}^k p^k (1-p)^{1-k}\]
+
+Ainsi, si \(k=0\) on a \(1-p\). Par contre, si \(k=1\) on aura 1.
+\end{frame}
+
+\begin{frame}[fragile]{Espérance, variance et Fonction de répartition}
+\protect\hypertarget{espuxe9rance-variance-et-fonction-de-ruxe9partition-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repartition.bern }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(p,k)\{}
+\NormalTok{  i     }\OtherTok{=} \DecValTok{0}
+\NormalTok{  somme }\OtherTok{=} \DecValTok{0}
+  \ControlFlowTok{while}\NormalTok{(i}\SpecialCharTok{\textless{}=}\NormalTok{k)\{}
+    \ControlFlowTok{if}\NormalTok{ ( (k}\SpecialCharTok{==}\DecValTok{0} \SpecialCharTok{|}\NormalTok{ k}\SpecialCharTok{==}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) )\{}
+\NormalTok{      probabilite }\OtherTok{=}\NormalTok{ p}\SpecialCharTok{**}\NormalTok{i }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{i)}
+\NormalTok{      somme }\OtherTok{=}\NormalTok{ somme }\SpecialCharTok{+}\NormalTok{ probabilite}
+\NormalTok{      i }\OtherTok{=}\NormalTok{ i}\SpecialCharTok{+}\DecValTok{1}
+\NormalTok{      \} }\ControlFlowTok{else}
+        \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de k ou de p"}\NormalTok{)}
+\NormalTok{  \}}
+  \FunctionTok{print}\NormalTok{(somme)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de répartition}
+\protect\hypertarget{fonction-de-ruxe9partition}{}
+
+Application : 
+
+
+Calculons \(P(X \le 0)\) et \(P(X \le 1)\) pour une loi de Bernoulli de
+paramètre \(p=0.4\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{repartition.bern}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\DecValTok{0}\NormalTok{) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.6
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{repartition.bern}\NormalTok{(}\FloatTok{0.4}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 1
+\end{verbatim}
+
+La fonction de répartition associée à X prend ainsi deux valeurs quelque
+soit la valeur du paramètre p.
+\end{frame}
+
+\begin{frame}{Fonction de répartition}
+\protect\hypertarget{fonction-de-ruxe9partition-1}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-5-1} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Loi Binomiale}
+\protect\hypertarget{loi-binomiale}{}
+\(P(X=k)\) pour une loi binomiale :
+\(\quad avec \quad k=0,1, \cdots, n \quad ; \quad n \in N^* \quad p \in ]0,1[ \quad ; \quad k\le n\)
+
+\[P(X=k) = C_n^k p^k (1-p)^{n-k}\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{binome }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(n, p, k)\{}
+  \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textless{}=}\NormalTok{n }\SpecialCharTok{\&}\NormalTok{ (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{is.numeric}\NormalTok{(n) }\SpecialCharTok{\&\&}\NormalTok{ n}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    combinaison }\OtherTok{=} \FunctionTok{factorial}\NormalTok{(n)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{factorial}\NormalTok{(k)}\SpecialCharTok{*}\FunctionTok{factorial}\NormalTok{(n}\SpecialCharTok{{-}}\NormalTok{k))}
+\NormalTok{    probabilite  }\OtherTok{=}\NormalTok{ combinaison }\SpecialCharTok{*}\NormalTok{ p}\SpecialCharTok{**}\NormalTok{k }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(n}\SpecialCharTok{{-}}\NormalTok{k)}
+    \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de n, p et k"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Loi Binomiale}
+\protect\hypertarget{loi-binomiale-1}{}
+
+Application : \(P(X=1)\) pour une loi \(B(n=2, p=0.5)\) :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{k }\OtherTok{=} \DecValTok{1}
+\NormalTok{n }\OtherTok{=} \DecValTok{2}
+\NormalTok{p }\OtherTok{=} \FloatTok{0.5}
+\FunctionTok{binome}\NormalTok{(n, p, k) }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.5
+\end{verbatim}
+
+Si on veut calculer par exmple \(P(X=4)\) avec X qui suit une loi
+\(B(n=2, p=0.5)\) alors on aura :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{binome}\NormalTok{(}\DecValTok{2}\NormalTok{, }\FloatTok{0.5}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] "Entrer des valeurs correctes de n, p et k"
+\end{verbatim}
+
+Ce qui est tout a fait normal car \(k\) ne peut dépasser \(n\).
+\end{frame}
+
+\begin{frame}[fragile]{Espérance, variance et fonction de répartition}
+\protect\hypertarget{espuxe9rance-variance-et-fonction-de-ruxe9partition-2}{}
+\(E(X)=np\) et \(Var(X)=np(1-p)\) on peut s'amuser à programmer une
+petite fonction qui renvoit ces caractéristiques :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{carac.binom }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(n, p)\{}
+  \ControlFlowTok{if}\NormalTok{(n}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&\&} \FunctionTok{is.numeric}\NormalTok{(n) }\SpecialCharTok{\&\&}\NormalTok{ n}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{      esperance }\OtherTok{=}\NormalTok{ n}\SpecialCharTok{*}\NormalTok{p}
+\NormalTok{      variance  }\OtherTok{=}\NormalTok{ n}\SpecialCharTok{*}\NormalTok{p}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}
+      \FunctionTok{return}\NormalTok{(}\FunctionTok{list}\NormalTok{(}\AttributeTok{Esperance =}\NormalTok{ esperance, }\AttributeTok{Variance=}\NormalTok{variance))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de n ou de p"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Exemple}
+\protect\hypertarget{exemple}{}
+si \(X\) suit une B(4, 0.8) alors :
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{carac.binom}\NormalTok{(}\DecValTok{4}\NormalTok{, }\FloatTok{0.8}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Esperance
+[1] 3.2
+ 
+Variance
+[1] 0.64
+\end{verbatim}
+
+Pour la fonction de répartition, on peut passer la relation :
+
+\[F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k C_n^i p^i (1-p)^{1-i}\]
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de répartition de la loi Binomiale}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-binomiale}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repartition.binom }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(n, p, k)\{}
+\NormalTok{  i }\OtherTok{=} \DecValTok{0}
+\NormalTok{  somme }\OtherTok{=} \DecValTok{0}
+  \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textless{}=}\NormalTok{n }\SpecialCharTok{\&}\NormalTok{ (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&} \FunctionTok{is.numeric}\NormalTok{(n) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+    \ControlFlowTok{while}\NormalTok{(i}\SpecialCharTok{\textless{}=}\NormalTok{k)\{}
+\NormalTok{      combinaison}\OtherTok{=}\FunctionTok{factorial}\NormalTok{(n)}\SpecialCharTok{/}\NormalTok{(}\FunctionTok{factorial}\NormalTok{(i)}\SpecialCharTok{*}\FunctionTok{factorial}\NormalTok{(n}\SpecialCharTok{{-}}\NormalTok{i))}
+\NormalTok{      probabilite}\OtherTok{=}\NormalTok{ combinaison }\SpecialCharTok{*}\NormalTok{ p}\SpecialCharTok{**}\NormalTok{i }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(n}\SpecialCharTok{{-}}\NormalTok{i)}
+\NormalTok{      somme }\OtherTok{=}\NormalTok{ somme }\SpecialCharTok{+}\NormalTok{ probabilite}
+\NormalTok{      i }\OtherTok{=}\NormalTok{ i }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{      \}}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de n, de p ou de k"}\NormalTok{)}
+\NormalTok{    \}}
+ \FunctionTok{print}\NormalTok{(somme)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Exemple}
+\protect\hypertarget{exemple-1}{}
+
+Application : 
+
+
+Calculons \(P(X \le 1)\) pour une loi \(B(2, 0.5)\). On sait que
+\(P(X \le 1) = P(X=0) + P(X=1)\). Par conséquent,
+\(P(X \le 1) = 0.25 + 0.5 = 0.75\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n }\OtherTok{=} \DecValTok{2}
+\NormalTok{p }\OtherTok{=} \FloatTok{0.5}
+\NormalTok{k }\OtherTok{=} \DecValTok{1}
+\FunctionTok{repartition.binom}\NormalTok{ (n, p, k)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.75
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Fonction de répartition d'une loi B(100, 0.5) :}
+\protect\hypertarget{fonction-de-ruxe9partition-dune-loi-b100-0.5}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-14-1} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Lois de Poisson}
+\protect\hypertarget{lois-de-poisson}{}
+La P(X=k) lorsque X suit une loi de Poisson est donnée par :
+
+\[P(X=k) = \frac{e^{-\lambda} \lambda^{k}}{k!}\] Avec
+\(k=0, 1,\cdots,\infty\) et \(\lambda>0\). \(E(X)=\lambda\) et
+\(Var(X)=\lambda\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{poisson }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(lambda, k)\{}
+  \ControlFlowTok{if}\NormalTok{(lambda}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ k}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{is.numeric}\NormalTok{(k) }\SpecialCharTok{\&\&}\NormalTok{ k}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    probabilite }\OtherTok{=}\NormalTok{ (}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{lambda)}\SpecialCharTok{*}\NormalTok{lambda}\SpecialCharTok{**}\NormalTok{k)}\SpecialCharTok{/}\FunctionTok{factorial}\NormalTok{(k)}
+    \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de k ou de lambda"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Exemple d'application}
+\protect\hypertarget{exemple-2}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{poisson}\NormalTok{(}\DecValTok{10}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.002269996
+\end{verbatim}
+
+Pour \(n\) assez grand et \(p\) très petit, on peut approximer une loi
+binomiale par une loi de Poisson. Supposons que l'on veuille calculer :
+P(X=2) avec X suivant une loi \(B(100, 0.01)\). On pose donc
+\(np=\lambda\) et on calcule aussi P(X=2) avec X suivant une loi
+\(P(\lambda = np)\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b1 }\OtherTok{=} \FunctionTok{binome}\NormalTok{(}\DecValTok{100}\NormalTok{, }\FloatTok{0.01}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1848648
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{p1 }\OtherTok{=} \FunctionTok{poisson}\NormalTok{(}\DecValTok{100}\SpecialCharTok{*}\FloatTok{0.01}\NormalTok{, }\DecValTok{2}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1839397
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de répartition de la loi de Poisson}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-de-poisson}{}
+On applique la formule suivante :
+\(F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k \frac{e^{-\lambda} \lambda^{i}}{i!}\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repartition.poiss }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(lambda, k)\{}
+\NormalTok{  i }\OtherTok{=} \DecValTok{0}
+\NormalTok{  somme }\OtherTok{=} \DecValTok{0}
+  \ControlFlowTok{if}\NormalTok{(lambda}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&}\NormalTok{ k}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&\&} \FunctionTok{is.numeric}\NormalTok{(k) }\SpecialCharTok{\&\&}\NormalTok{ k}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+    \ControlFlowTok{while}\NormalTok{(i}\SpecialCharTok{\textless{}=}\NormalTok{k)\{}
+\NormalTok{      probabilite }\OtherTok{=}\NormalTok{ (}\FunctionTok{exp}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{lambda)}\SpecialCharTok{*}\NormalTok{lambda}\SpecialCharTok{**}\NormalTok{i)}\SpecialCharTok{/}\FunctionTok{factorial}\NormalTok{(i)}
+\NormalTok{      somme }\OtherTok{=}\NormalTok{ somme }\SpecialCharTok{+}\NormalTok{ probabilite}
+\NormalTok{      i }\OtherTok{=}\NormalTok{ i }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{      \}}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de n, de p ou de k"}\NormalTok{)}
+\NormalTok{    \}}
+ \FunctionTok{print}\NormalTok{(somme)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{Fonction de répartition de la loi de poisson}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-de-poisson-1}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-20-1} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Loi Géométrique}
+\protect\hypertarget{loi-guxe9omuxe9trique}{}
+X suit loi géométrique si et seulement si sa loi de probabilité est donnée par :
+
+\[P(X=k) = p(1-p)^{k-1}\] Avec \(k=1, 2, \cdots, \infty\) et
+\(p \in ]0 , 1[\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{geometrique }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(p, k)\{}
+  \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textgreater{}=}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{  (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}  \FunctionTok{is.numeric}\NormalTok{(k) }\SpecialCharTok{\&}\NormalTok{ k}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    probabilite }\OtherTok{=}\NormalTok{ p}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(k}\DecValTok{{-}1}\NormalTok{)}
+    \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \}}\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de p ou de k"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Exemple :}
+\protect\hypertarget{exemple-3}{}
+Calculons \(P(X=3)\) avec \(X\) suivant une loi \(G(p=0.7)\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{geometrique}\NormalTok{(}\FloatTok{0.7}\NormalTok{, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.063
+\end{verbatim}
+
+Les caractéristiques d'une loi géométrique sont : \(E(X)=\frac{1}{p}\)
+et \(Var(X)=\frac{1-p}{p^2}\).
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de répartition de la loi géométrique}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-guxe9omuxe9trique}{}
+\(F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k p(1-p)^{i-1}\)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repartition.geom }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(p, k)\{}
+\NormalTok{  i }\OtherTok{=} \DecValTok{1}
+\NormalTok{  somme }\OtherTok{=} \DecValTok{0}
+  \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textgreater{}=}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{  (p}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&}\NormalTok{ p}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{\&}  \FunctionTok{is.numeric}\NormalTok{(k) }\SpecialCharTok{\&}\NormalTok{ k}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+    \ControlFlowTok{while}\NormalTok{(i}\SpecialCharTok{\textless{}=}\NormalTok{k)\{}
+\NormalTok{      probabilite }\OtherTok{=}\NormalTok{ p}\SpecialCharTok{*}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{p)}\SpecialCharTok{**}\NormalTok{(i}\DecValTok{{-}1}\NormalTok{)}
+\NormalTok{      somme }\OtherTok{=}\NormalTok{ somme }\SpecialCharTok{+}\NormalTok{ probabilite}
+\NormalTok{      i }\OtherTok{=}\NormalTok{ i }\SpecialCharTok{+} \DecValTok{1}
+\NormalTok{      \}}
+\NormalTok{    \}}\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer des valeurs correctes de p ou de k"}\NormalTok{)}
+\NormalTok{    \}}
+ \FunctionTok{print}\NormalTok{(somme)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}{Fonction de répartition de la loi géométrique}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-guxe9omuxe9trique-1}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-25-1} \end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Loi uniforme discrète}
+\protect\hypertarget{loi-uniforme-discruxe8te}{}
+Soit \(X\) une variable aléatoire discrète uniforme prenant \(n\)
+valeurs \(k_1, k_2, \dots, k_n\). La fonction de probabilité de \(X\)
+est donnée par :
+
+\[P(X = k_i) = \frac{1}{n} \quad \text{pour } k_i \in \{k_1, k_2, \dots, k_n\}.\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{uniforme }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(n)\{}
+  \ControlFlowTok{if}\NormalTok{(n}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&} \FunctionTok{is.numeric}\NormalTok{(n) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    probabilite }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\NormalTok{n}
+    \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{\{}
+    \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer une valeur correcte de n"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Exemple}
+\protect\hypertarget{exemple-4}{}
+Considérons le jet d'un dé non biaisé. L'ensemble des \(n = 6\) valeurs
+possible de \(X\) est \(A = {1, 2, 3, 4, 5, 6}\). A chaque fois que le
+dé est jeté, la probabilité d'un résultat donné vaut \(1/6\).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n}\OtherTok{=}\DecValTok{6}
+\FunctionTok{uniforme}\NormalTok{(n)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.1666667
+\end{verbatim}
+
+Les caractéristiques de la loi uniforme discrète :
+\(E(X) = \frac{n + 1}{2}\). La variance :
+\(Var(X) = \frac{n^2 - 1}{12}\)
+\end{frame}
+
+\begin{frame}{Fonction de Répartition de la loi uniforme discrète}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-uniforme-discruxe8te}{}
+La fonction de répartition \(F(k)\) pour \(X\) est définie comme suit :
+\[F(k) = 
+\begin{cases} 
+0 & \text{pour } k < 1, \\
+\frac{\lfloor k \rfloor}{n} & \text{pour } 1 \leq k < n, \\
+1 & \text{pour } k \geq n.
+\end{cases}\]
+
+Exemple :
+
+Considérons le jet d'un dé non biaisé. L'ensemble des \(n = 6\) valeurs
+possible de \(X\) est \(A = {1, 2, 3, 4, 5, 6}\). A chaque fois que le
+dé est jeté, la probabilité d'un résultat donné vaut \(1/6\). calculons
+\(P(X\le 4)\). Cela revient à calculer \(F(4)= 4/6 = 2/3 = 0.66667\).
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de Répartition de la loi uniforme
+discrète}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-uniforme-discruxe8te-1}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{repartition.unif.d }\OtherTok{=} \ControlFlowTok{function}\NormalTok{(n, k)\{}
+  \ControlFlowTok{if}\NormalTok{((k}\SpecialCharTok{\textgreater{}=}\DecValTok{1} \SpecialCharTok{\&}\NormalTok{ k}\SpecialCharTok{\textless{}}\NormalTok{n) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\textgreater{}}\DecValTok{0} \SpecialCharTok{\&} \FunctionTok{is.numeric}\NormalTok{(n) }\SpecialCharTok{\&}\NormalTok{ n}\SpecialCharTok{\%\%}\DecValTok{1}\SpecialCharTok{==}\DecValTok{0}\NormalTok{)\{}
+\NormalTok{    probabilite }\OtherTok{=} \FunctionTok{floor}\NormalTok{(k)}\SpecialCharTok{/}\NormalTok{n}
+    \FunctionTok{print}\NormalTok{(probabilite)}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{\{}
+    \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textless{}}\DecValTok{1}\NormalTok{)\{}
+      \FunctionTok{print}\NormalTok{(}\DecValTok{0}\NormalTok{)}
+\NormalTok{    \} }\ControlFlowTok{else}\NormalTok{\{}
+      \ControlFlowTok{if}\NormalTok{(k}\SpecialCharTok{\textgreater{}=}\NormalTok{n)\{}
+        \FunctionTok{print}\NormalTok{(}\DecValTok{1}\NormalTok{)}
+\NormalTok{      \}}\ControlFlowTok{else}\NormalTok{\{}
+        \FunctionTok{print}\NormalTok{(}\StringTok{"Entrer une valeur correcte de n ou de k"}\NormalTok{)}
+\NormalTok{      \}}
+\NormalTok{    \}}
+\NormalTok{  \}}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+\end{frame}
+
+\begin{frame}[fragile]{Application à l'exemple précédent}
+\protect\hypertarget{application-uxe0-lexemple-pruxe9cuxe9dent}{}
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{repartition.unif.d}\NormalTok{(}\DecValTok{6}\NormalTok{, }\DecValTok{4}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+[1] 0.6666667
+\end{verbatim}
+
+Il y a donc 2 chances sur 3 que les valeurs des faces du dé soient
+toutes inférieures ou égales à 4 (soit 67\%).
+
+Enfin, tu peux tout simplement t'inspérer de tout cet arsenal pour
+programmer les autres lois.
+\end{frame}
+
+\begin{frame}{Fonction de répartition de la loi uniforme}
+\protect\hypertarget{fonction-de-ruxe9partition-de-la-loi-uniforme}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-31-1} \end{center}
+\end{frame}
+
+\begin{frame}{Résumé}
+\protect\hypertarget{ruxe9sumuxe9}{}
+\begin{center}\includegraphics{lois_discretes_files/figure-beamer/unnamed-chunk-32-1} \end{center}
+\end{frame}
+
+\begin{frame}{Fin}
+\protect\hypertarget{fin}{}
+\begin{alertblock}{julienbidias246@gmail.com}
+
+Bonne lecture et surtout n'hésite pas à écrire au mail ci-dessus pour faire des suggestions et avoir aussi le code complet avec tous les commentaires à l'appui.
+
+\vspace{3mm}
+A suivre...
+
+\end{alertblock}
+\end{frame}
+
+\end{document}
