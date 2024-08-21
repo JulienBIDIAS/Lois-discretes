@@ -1,0 +1,549 @@
+---
+title: "Lois de probabilités discrètes sur R"
+author: "Julien Parfait Bidias Assala"
+date: "`r Sys.Date()`"
+output: 
+  beamer_presentation: 
+    theme: CambridgeUS
+    colortheme: dolphin
+    fonttheme: structurebold
+    keep_tex: true
+---
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(dplyr)
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Background
+
+- Les lois de probabilités discrètes en statistiques permettent de modéliser des situations où les variables aléatoires prennent un nombre fini ou dénombrable de valeurs distinctes. Ces lois sont couramment utilisées pour décrire des phénomènes où les résultats possibles sont limités à des catégories distinctes ou des événements discrets. 
+
+
+- Par exemple, la loi binomiale permet de modéliser le nombre de succès dans une série d’essais indépendants, tandis que la loi de Poisson est utilisée pour décrire le nombre d’événements survenant dans un intervalle de temps ou d’espace fixe. D'autres exemples incluent la loi géométrique, qui mesure le nombre d'essais avant le premier succès, et la loi hypergéométrique, utilisée pour des échantillons sans remise.
+
+## Lois de probabilités discrètes
+
+Comment modéliser simplement, sans packages et de façon tout à fait compréhensible toutes ces différentes lois ? Tel est l'objet de la présentation.
+
+Nous présentons la loi :
+
+- De Bernouilli
+- Binomiale
+- De Poisson
+- Géométrique
+- Uniforme discrète
+- Hypergéométrique
+- Binomiale négative
+
+
+## Loi de Bernouilli 
+
+On sait que X suit une loi de Bernouilli lorsque : 
+
+$$P(X=k) = p^k (1-p)^{1-k} \quad avec \quad  k=0,1 \quad et \quad p \in ]0,1[$$
+
+Ce qui est donné par le code ci-dessous
+
+```{r cars, echo = TRUE}
+bernoulli = function(p,k){
+  if ( (k==0 | k==1) & (p>0 & p<1) ){
+        probabilite = p**k * (1-p)**(1-k)
+        print(probabilite)
+  } else
+    print("Entrer des valeurs correctes de k ou de p")
+}
+```
+
+## Loi de Bernouilli  
+
+On peut effectuer un test. Supposons que X suit une loi de Bernoulli avec $p=0.4$. On veut calculer $P(X=0)$ et $P(X=1)$.
+
+```{r, echo = TRUE}
+bernoulli(0.4, 0)
+
+bernoulli(0.4, 1)
+
+bernoulli(0.4, 3)
+```
+## Espérance, variance et Fonction de répartition
+
+Pour la moyenne et la variance il suffit simplement de prendre : 
+
+$$E(X) = p$$
+$$Var(X) = pq$$
+On peut construire la fonction de répartition par la relation : 
+
+$$F_X (k) = P(X\le k)$$
+On peut passer aussi par la relation : 
+
+$$F_X (k) = P(X\le k) = \sum_{i=0}^k p^k (1-p)^{1-k}$$
+
+Ainsi, si $k=0$ on a $1-p$. Par contre, si $k=1$ on aura 1.
+
+## Espérance, variance et Fonction de répartition
+
+```{r, echo=TRUE}
+repartition.bern = function(p,k){
+  i     = 0
+  somme = 0
+  while(i<=k){
+    if ( (k==0 | k==1) & (p>0 & p<1) ){
+      probabilite = p**i * (1-p)**(1-i)
+      somme = somme + probabilite
+      i = i+1
+      } else
+        print("Entrer des valeurs correctes de k ou de p")
+  }
+  print(somme)
+}
+```
+
+## Fonction de répartition
+
+Calculons $P(X \le 0)$ et  $P(X \le 1)$ pour une loi de Bernoulli de paramètre $p=0.4$. 
+
+```{r, echo=TRUE}
+repartition.bern(0.4, 0) 
+
+repartition.bern(0.4, 1)
+
+```
+
+La fonction de répartition associée à X prend ainsi deux valeurs quelque soit la valeur du paramètre p.
+
+
+## Fonction de répartition
+
+```{r, echo=FALSE, fig.dim=c(4,3), fig.align='center', include=FALSE}
+k = seq(0, 1, by=1)
+k = sort(k)
+prob = c(0,0)
+for(i in 1:length(k)){
+  prob[[i]] = repartition.bern(0.4, k[[i]])
+}
+```
+
+
+```{r, echo=FALSE, fig.dim=c(4,3), fig.align='center'}
+plot(k, prob, main = "Fonction de répartition",
+     xlab = "Nombre de succès",
+     ylab = "Probabilité de succès", type = 'p',
+     pch=9, col="blue", ylim = c(0, 1))
+
+```
+
+## Loi Binomiale 
+
+$P(X=k)$ pour une loi binomiale : $\quad avec \quad k=0,1, \cdots, n \quad ; \quad n \in N^* \quad p \in ]0,1[  \quad ; \quad k\le n$
+
+$$P(X=k) = C_n^k p^k (1-p)^{n-k}$$
+
+```{r, echo=TRUE}
+binome = function(n, p, k){
+  if(k<=n & (p>0 && p<1) & n>0 && is.numeric(n) && n%%1==0){
+    combinaison = factorial(n)/(factorial(k)*factorial(n-k))
+    probabilite  = combinaison * p**k * (1-p)**(n-k)
+    print(probabilite)
+  } else{
+    print("Entrer des valeurs correctes de n, p et k")
+  }
+}
+```
+
+
+##   Loi Binomiale
+
+$P(X=1)$ pour une loi $B(2, 0.5)$ :
+
+```{r, echo=TRUE}
+k = 1
+n = 2
+p = 0.5
+binome(n, p, k) 
+```
+
+Si on veut calculer par exmple $P(X=4)$ avec X qui suit une loi $B(n=2, p=0.5)$ alors on aura : 
+
+```{r, echo=TRUE}
+binome(2, 0.5, 4)
+```
+
+
+Ce qui est tout a fait normal car $k$ ne peut dépasser $n$.
+
+## Espérance, variance et fonction de répartition 
+
+$E(X)=np$ et $Var(X)=np(1-p)$ on peut s'amuser à programmer une petite fonction qui renvoit ces caractéristiques : 
+
+```{r, echo=TRUE}
+carac.binom = function(n, p){
+  if(n>0 && (p>0 & p<1) && is.numeric(n) && n%%1==0){
+      esperance = n*p
+      variance  = n*p*(1-p)
+      return(list(Esperance = esperance, Variance=variance))
+  } else{
+    print("Entrer des valeurs correctes de n ou de p")
+  }
+}
+```
+
+## Exemple 
+
+si $X$ suit une B(4, 0.8) alors : 
+
+```{r, echo=TRUE}
+carac.binom(4, 0.8)
+```
+
+
+Pour la fonction de répartition : 
+
+$$F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k C_n^i p^i (1-p)^{1-i}$$
+
+## Fonction de répartition de la loi Binomiale
+
+
+```{r, echo=TRUE}
+repartition.binom = function(n, p, k){
+  i = 0
+  somme = 0
+  if(k<=n & (p>0 & p<1) & n>0 & is.numeric(n) & n%%1==0){
+    while(i<=k){
+      combinaison=factorial(n)/(factorial(i)*factorial(n-i))
+      probabilite= combinaison * p**i * (1-p)**(n-i)
+      somme = somme + probabilite
+      i = i + 1
+      }
+    }else{
+    print("Entrer des valeurs correctes de n, de p ou de k")
+    }
+ print(somme)
+}
+
+```
+
+## Exemple : 
+
+Calculons $P(X \le 1)$ pour une loi $B(2, 0.5)$. On sait que  $P(X \le 1) = P(X=0) + P(X=1)$. Par conséquent, $P(X \le 1)  = 0.25 + 0.5 = 0.75$.
+
+
+```{r, echo=TRUE}
+n = 2
+p = 0.5
+k = 1
+repartition.binom (n, p, k)
+```
+## Fonction de répartition d'une loi B(100, 0.5) : 
+
+```{r, echo=FALSE, fig.dim=c(4,4), fig.align='center', include=FALSE}
+vecteur =  seq(1,100,by=1)
+vecteur.prob = c(0)
+for (i in 1:length(vecteur)) {
+  vecteur.prob[i]= repartition.binom(100, 0.5, vecteur[[i]])
+}
+vecteur.prob = sort(vecteur.prob)
+
+
+```
+
+
+```{r, echo=FALSE, fig.dim=c(4,3), fig.align='center'}
+plot(vecteur, vecteur.prob, main = "Fonction de répartition B(n=100, p=0.5)",
+     xlab = "Nombre de succès", ylab = "Probabilité de succès", type = 'p',
+     pch=20, col="blue", ylim = c(0, 1), xlim = c(2,100))
+```
+
+
+## Lois de Poisson
+
+La P(X=k) lorsque X suit une loi de Poisson est donnée par : 
+
+$$P(X=k) = \frac{e^{-\lambda} \lambda^{k}}{k!}$$
+Avec $k=0, 1,\cdots,\infty$ et $\lambda>0$. $E(X)=\lambda$ et $Var(X)=\lambda$.
+
+
+```{r, echo=TRUE}
+poisson = function(lambda, k){
+  if(lambda>0 && k>0 && is.numeric(k) && k%%1==0){
+    probabilite = (exp(-lambda)*lambda**k)/factorial(k)
+    print(probabilite)
+  } else {
+    print("Entrer des valeurs correctes de k ou de lambda")
+  }
+}
+
+```
+
+
+## Exemple 
+
+```{r, echo=TRUE}
+poisson(10, 2)
+```
+Pour $n$ assez grand et $p$ très petit, on peut approximer une loi binomiale par une loi de Poisson. Supposons que l'on veuille calculer : P(X=2) avec X suivant une loi $B(100, 0.01)$. On pose donc $np=\lambda$ et on calcule aussi P(X=2) avec X suivant une loi $P(\lambda = np)$
+
+```{r, echo=TRUE}
+b1 = binome(100, 0.01, 2)
+p1 = poisson(100*0.01, 2)
+```
+
+## Fonction de répartition de la loi de Poisson
+
+On applique la formule suivante : $F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k \frac{e^{-\lambda} \lambda^{i}}{i!}$
+
+
+```{r, echo=TRUE}
+repartition.poiss = function(lambda, k){
+  i = 0
+  somme = 0
+  if(lambda>0 && k>0 && is.numeric(k) && k%%1==0){
+    while(i<=k){
+      probabilite = (exp(-lambda)*lambda**i)/factorial(i)
+      somme = somme + probabilite
+      i = i + 1
+      }
+    }else{
+    print("Entrer des valeurs correctes de n, de p ou de k")
+    }
+ print(somme)
+}
+
+```
+
+## Fonction de répartition de la loi de poisson
+
+```{r, echo=FALSE, include=FALSE}
+vecteur =  seq(1,100,by=1)
+vecteur.prob = c(0)
+for (i in 1:length(vecteur)) {
+  vecteur.prob[i]= repartition.poiss(10, vecteur[[i]])
+}
+vecteur.prob = sort(vecteur.prob)
+
+```
+
+
+
+```{r, echo=FALSE, fig.dim=c(4,3), fig.align='center'}
+plot(vecteur, vecteur.prob, main = "Fonction de répartition P(lambda=10)",
+     xlab = "Valeurs de k", ylab = "P(X=k)", type = 'p',
+     pch=20, col="blue", ylim = c(0, 1), xlim = c(2,100))
+```
+
+## Loi Géométrique 
+
+X suit loi géométrique si et seulement si : 
+
+$$P(X=k) = p(1-p)^{k-1}$$
+Avec $k=1, 2, \cdots, \infty$ et $p \in ]0 , 1[$
+
+```{r, echo=TRUE}
+geometrique = function(p, k){
+  if(k>=0 &  (p>0 & p<1) &  is.numeric(k) & k%%1==0){
+    probabilite = p*(1-p)**(k-1)
+    print(probabilite)
+  }else{
+    print("Entrer des valeurs correctes de p ou de k")
+  }
+}
+```
+
+## Exemple : 
+
+Calculons $P(X=3)$ avec $X$ suivant une loi $G(p=0.7)$.
+
+```{r, echo=TRUE}
+geometrique(0.7, 3)
+```
+Les caractéristiques d'une loi géométrique sont : $E(X)=\frac{1}{p}$ et $Var(X)=\frac{1-p}{p^2}$.
+
+## Fonction de répartition de la loi géométrique
+
+$F_X (k) = P(X\le k) = \sum_{i=0}^k P(X=i) = \sum_{i=0}^k p(1-p)^{i-1}$
+
+```{r, echo=TRUE}
+repartition.geom = function(p, k){
+  i = 1
+  somme = 0
+  if(k>=0 &  (p>0 & p<1) &  is.numeric(k) & k%%1==0){
+    while(i<=k){
+      probabilite = p*(1-p)**(i-1)
+      somme = somme + probabilite
+      i = i + 1
+      }
+    }else{
+    print("Entrer des valeurs correctes de p ou de k")
+    }
+ print(somme)
+}
+```
+
+## Fonction de répartition de la loi géométrique
+
+
+```{r, echo=FALSE, include=FALSE}
+vecteur =  seq(1,100,by=1)
+vecteur.prob = c(0)
+for (i in 1:length(vecteur)) {
+  vecteur.prob[i]= repartition.geom(0.7, vecteur[[i]])
+}
+vecteur.prob = sort(vecteur.prob)
+
+```
+
+
+```{r, echo=FALSE, fig.dim=c(4,3), fig.align='center'}
+plot(vecteur, vecteur.prob, main = "Fonction de répartition G(p=0.7)",
+     xlab = "Valeurs de k", ylab = "P(X=k)", type = 'p',
+     pch=20, col="blue", ylim = c(0, 1), xlim = c(2,100))
+```
+
+
+## Loi uniforme discrète 
+
+Soit \( X \) une variable aléatoire discrète uniforme prenant \( n \) valeurs \( k_1, k_2, \dots, k_n \). La fonction de probabilité de \( X \) est donnée par :
+
+$$P(X = k_i) = \frac{1}{n} \quad \text{pour } k_i \in \{k_1, k_2, \dots, k_n\}.$$
+
+```{r, echo=TRUE}
+uniforme = function(n){
+  if(n>0 & is.numeric(n) & n%%1==0){
+    probabilite = 1/n
+    print(probabilite)
+  } else{
+    print("Entrer une valeur correcte de n")
+  }
+}
+```
+
+
+## Exemple 
+
+
+Considérons le jet d'un dé non biaisé. L'ensemble des $n = 6$ valeurs possible de $X$ est $A = {1, 2, 3, 4, 5, 6}$. A chaque fois que le dé est jeté, la probabilité d'un résultat donné vaut $1/6$.
+
+```{r, echo=TRUE}
+n=6
+uniforme(n)
+```
+Les caractéristiques de la loi uniforme discrète : $E(X) = \frac{n + 1}{2}$. La variance : $Var(X) = \frac{n^2 - 1}{12}$
+
+
+## Fonction de Répartition de la loi uniforme discrète 
+
+La fonction de répartition $F(k)$ pour $X$ est définie comme suit :
+$$F(k) = 
+\begin{cases} 
+0 & \text{pour } k < 1, \\
+\frac{\lfloor k \rfloor}{n} & \text{pour } 1 \leq k < n, \\
+1 & \text{pour } k \geq n.
+\end{cases}$$
+
+Exemple : 
+
+Considérons le jet d'un dé non biaisé. L'ensemble des $n = 6$ valeurs possible de $X$ est $A = {1, 2, 3, 4, 5, 6}$. A chaque fois que le dé est jeté, la probabilité d'un résultat donné vaut $1/6$. calculons $P(X\le 4)$. Cela revient à calculer $F(4)= 4/6 = 2/3 = 0.66667$.
+
+## Fonction de Répartition de la loi uniforme discrète 
+
+```{r, echo=TRUE}
+repartition.unif.d = function(n, k){
+  if((k>=1 & k<n) & n>0 & is.numeric(n) & n%%1==0){
+    probabilite = floor(k)/n
+    print(probabilite)
+  } else{
+    if(k<1){
+      print(0)
+    } else{
+      if(k>=n){
+        print(1)
+      }else{
+        print("Entrer une valeur correcte de n ou de k")
+      }
+    }
+  }
+}
+```
+
+
+## Application à l'exemple précédent 
+
+```{r, echo=TRUE}
+repartition.unif.d(6, 4)
+```
+
+
+Il y a donc 2 chances sur 3 que les valeurs des faces du dé soient toutes inférieures ou égales à 4 (soit 67\%).
+
+Enfin, tu peux tout simplement t'inspérer de tout cet arsenal pour programmer les autres lois.
+
+## Fonction de répartition de la loi uniforme
+
+
+
+```{r, echo=FALSE, include=FALSE}
+vecteur =  seq(1,100,by=1)
+vecteur.prob = c(0)
+for (i in 1:length(vecteur)) {
+  vecteur.prob[i]= repartition.unif.d(5, vecteur[[i]])
+}
+vecteur.prob = sort(vecteur.prob)
+```
+
+```{r,echo=FALSE, fig.dim=c(4,3), fig.align='center'}
+plot(vecteur, vecteur.prob, main = "Fonction de répartition loi U",
+     xlab = "Valeurs de k", ylab = "P(X=k)", type = 'p',
+     pch=20, col="blue", ylim = c(0, 1), xlim = c(2,100))
+```
+
+
+
+
+## Résumé
+
+```{r, echo=FALSE, fig.align='center', fig.dim=c(4,3), warning=FALSE, message=FALSE}
+# Paramètres des distributions
+n = 100      # nombre d'essais pour la binomiale et la binomiale négative
+p = 0.5     # probabilité de succès pour les distributions binomiale, géométrique et binomiale négative
+
+lambda  = 3  # paramètre pour la loi de Poisson
+n_hyper = 50
+k       = 1:100   # valeurs pour la variable aléatoire (X)
+
+# Fonctions de répartition pour chaque distribution
+data = data.frame(
+  k = rep(k, 4),
+  CDF = c(
+    pbinom(k, size = n, prob = p),           # Binomiale
+    ppois(k, lambda = lambda),               # Poisson
+    pgeom(k, prob = p),                      # Géométrique
+    vecteur.prob),     # Uniforme discrète           
+    Lois = factor(rep(c("Binomiale", "Poisson", "Géométrique",
+                              "Uniforme discrète"), each = length(k)))
+)
+
+# Graphique
+ggplot(data, aes(x = k, y = CDF, color = Lois)) +
+  geom_point(size = 1.2) +
+  labs(title = "Fonctions de répartition",
+              x = "Valeur de k", y = "Fonction de répartition (CDF)") +
+  scale_x_continuous(breaks = seq(0, 100, by = 5)) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+
+
+
+```
+
+
+## Fin
+
+\begin{alertblock}{julienbidias246@gmail.com}
+
+Bonne lecture et surtout n'hésite pas à écrire au mail ci-dessus pour faire des suggestions et avoir aussi le code complet avec tous les commentaires à l'appui.
+
+A suivre...
+
+\end{alertblock}
